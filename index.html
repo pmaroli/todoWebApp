@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf8">
+        <title>My Todo List</title>
+    </head>
+
+    <body onload="getTodo()">
+
+        <h1 style="font-size:200%; text-align: center;">
+            Enter a task to add to your Todo List
+        </h1>
+
+        <form id="todoForm" style="text-align:center;">
+            <input type="text" name="task" id="task" autocomplete="off">
+            <button type="submit">Add to List</button>
+            <button type="button" onclick="clearTodos()">Clear all Todos</button>
+        </form>
+
+        <p id="currentList"></p>
+
+        <script src="main.js"></script>
+        
+    </body>
+</html>

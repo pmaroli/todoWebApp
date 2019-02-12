@@ -1,7 +1,12 @@
-document.getElementById('todoForm').addEventListener('submit', newTodo)
+document.getElementById('todoForm').addEventListener('submit', newTodo);
 
 function newTodo() {
 	var taskName = document.getElementById('task').value;
+	
+	// Will not allow empty tasks to be added
+	if( taskName == '') {
+		return
+	}
 	
 	var todoItem = {
 		task: taskName,
@@ -25,31 +30,46 @@ function newTodo() {
 function getTodo() {
 	var todoList = JSON.parse(localStorage.getItem('todoList'));
 	var currentList = document.getElementById('currentList');
-	
-	currentList.innerHTML = '';
+	while( currentList.firstChild ) {
+		currentList.removeChild(currentList.firstChild); /* Clear the current list before updating */
+	}
 	
 	for( i=0 ; i < todoList.length ; i++ ) {
 		var taskName = todoList[i].task;
 		var complete = todoList[i].complete;
-		var checkMark = '';
 		
-		//Add a check mark to the end of the task name to signify that task is complete
+		checkMark = '';
 		if( complete == true ) {
-			currentList.innerHTML += `${i + 1}. ` + taskName + '  ' + '✔' + '<br>';	
-		} else {
-			currentList.innerHTML += `${i + 1}. ` + taskName + '  ' + checkMark +
-			'<button type="submit" onclick="todoComplete(\'' + `${i + 1}` + '\')">Complete</button><br>';	
+			checkMark = ' ✔';
 		}
+		var text = taskName + checkMark;
+		
+		var li = document.createElement("LI");
+		var a = document.createElement("a");
+		var textnode = document.createTextNode(text);
+		a.appendChild(textnode);
+		a.href = '#';
+		a.setAttribute("taskNumber", i+1); /* Create a CUSTOM attribute to keep track of task numbers */
+		a.setAttribute("onclick", "toggleComplete(this.getAttribute('taskNumber'));"); /* Is there a better way to do this ??? */
+		var span = document.createElement("SPAN"); /*Making the remove button a SPAN element allows it to be placed in the list nicely */
+		var closetxt = document.createTextNode("\u00D7");
+		span.className = "remove";
+		span.appendChild(closetxt);
+		span.setAttribute("taskNumber", i+1);
+		span.setAttribute("onclick", "todoRemove(this.getAttribute('taskNumber'));");
+		li.appendChild(a);
+		li.appendChild(span);
+		currentList.appendChild(li);
+		
 	}
-
 }
 
-function todoComplete(taskNumber) {
+function toggleComplete(taskNumber) {
 	var todoList = JSON.parse(localStorage.getItem('todoList'));
 	
 	for( i=0 ; i < todoList.length ; i++ ) {
 		if( taskNumber == i+1 ) {
-			todoList[i].complete = true;
+			todoList[i].complete = (!todoList[i].complete); /* Toggles the complete status of the task */
 		}
 	}
 	
@@ -59,18 +79,31 @@ function todoComplete(taskNumber) {
 }
 
 function todoRemove(taskNumber) {
-	//Get the Title Text of the task to be deleted
-	var titleToDelete = db.get(`todos[${taskNumber-1}].title`).value();
-	
-	//Delete the task object from the array
-	db.get('todos')
-	.remove( {title: `${titleToDelete}`} )
-	.write();
+		var todoList = JSON.parse(localStorage.getItem('todoList'));
+		
+		// Delete the task number
+		todoList.splice( taskNumber-1, 1);
+		
+		//Update the local storage appropriately
+		localStorage.setItem('todoList', JSON.stringify(todoList));
+		getTodo();
 }
 
+document.getElementById('clearall').addEventListener("click", clearTodos);
 function clearTodos() {
-	var todoList = [];
-	localStorage.setItem('todoList', JSON.stringify(todoList));
+	var r = confirm("Do you want to delete all tasks?");
 
+	if (r == true) {
+	var emptyList = [];
+	localStorage.setItem('todoList', JSON.stringify(emptyList));
+	
 	getTodo();
+
+	} else {
+		return
+	}
+}
+
+function testing(input) {
+	console.log(input);
 }

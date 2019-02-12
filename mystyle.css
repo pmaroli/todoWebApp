@@ -1,0 +1,178 @@
+/* A style sheet for the todo web application */ 
+
+html, body {
+    height: 100%;      /* Makes the 'todolist' div stretch to the bottom of the screen if */
+    display: flex;     /* there is no content */
+    flex-flow: column; 
+    font-family: monospace;
+    background-image: url("headerBackground.jpg");
+    background-color: black;
+    background-size: cover;
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.navbar {
+    height: 50px;
+    box-sizing: border-box;
+}
+.navbar a {
+    display: block; /* Makes the entire block clickable, not just the text */
+    float: left; /* Makes the list horizontal */
+    text-decoration: none; /* Removes the default underline associated with links */
+    padding: 15px 50px;
+    font-size: 20px;
+    color: rgb(241, 241, 241);
+    font-family: monospace;
+    text-align: center;
+    transition-duration: 0.5s;
+}
+.navbar a.right {
+    float: right;
+}
+.navbar a.clearall:hover {
+    color: red;
+}
+.navbar a:hover {
+    background: rgba(0, 0, 0, 0.438);
+}
+
+.header {
+    text-align: left;
+    color: white;
+    padding-left: 10%;
+    width: 90%;
+    word-break: normal;
+    font-family: monospace;
+}
+.header h1 {
+    font-size: 350%;
+    margin: 0px;
+    padding: 0px;
+}
+.header p {
+    margin: 0px;
+    padding: 0px; 
+}
+
+#todoForm {
+    text-align: center;
+    padding: 10px 10px; /* Add padding so that there is some space between div elements */
+}
+input {
+    width: 80%;
+    height: 70px;
+    font-size: 250%;
+    text-align: center;
+    box-sizing: border-box; 
+    background: rgba(0, 0, 0, 0.356);
+    color: white;
+    border: 0;
+    border-bottom: 3px solid white;
+}
+input:focus {
+    outline-width: 0; /* Get rid of the ugly highlight when focusing the input text box */
+}
+::placeholder {
+    color: white;
+    font-family: monospace;
+}
+
+button.submit {
+    font-size: 150%;
+    margin-top: 10px; /* Add some space between the text input form and the button */
+    padding: 10px;
+    min-width: 25%;
+    border-radius: 1em;
+    transition-duration: 0.5s;
+    background: rgba(85, 85, 85, 0);
+    color: white;
+    font-family: monospace;
+    border: 3px solid white;
+}
+button.submit:hover {
+    background: white;
+    color: black;
+}
+
+.todolist {
+    height: 100%;
+    width: 100%;
+    word-break: normal;
+    margin: 0px;
+    font-size: 200%;
+    color: white;
+    box-sizing: border-box;
+    
+}
+.todolist h1 {
+    text-align: center;
+    position: relative;
+    margin-bottom: 0px;
+}
+.todolist p {
+    margin-top: 0px;
+    font-size: 50%;
+    text-align: center;
+    color: white;
+    word-break: normal;
+    font-family: monospace;
+}
+#currentList {
+    line-height: 120%;
+    text-align: left;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+#currentList li {
+    position: relative; /* So that remove button can be positioned relative to li elements */
+    user-select: none; /* So that cursor doesn't interfere with close button clicks */
+}
+li a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    padding: 10px 40px 10px 0px; /* Add padding so that text doesn't interfere with 'close' button */
+    transition-duration: 0.5s;
+}
+li a:hover {
+    background: rgba(0, 0, 0, 0.438);
+}
+li span {
+    position: absolute; /* Position the botton at the top right of the li element */
+    right: 0;
+    top: 0;
+    height: 100%;
+    padding: 10px 15px;
+    font-size: 150%;
+    transition-duration: 0.2s;
+}
+li span:hover {
+    background: white;
+    color: red;
+}
+
+.footer {
+    text-align: center;
+    color: white;
+}
+.footerabout {
+    text-align: center;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+}
+
+.about {
+    word-break: normal;
+    margin: 0 auto;
+    font-size: 500%;
+    color: white;
+    text-align: center;
+    position: relative;
+    top: 30%;
+}
